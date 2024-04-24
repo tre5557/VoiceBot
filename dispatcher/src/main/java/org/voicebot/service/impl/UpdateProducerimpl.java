@@ -8,16 +8,16 @@ import org.voicebot.service.UpdateProducer;
 
 @Service
 @Log4j
-public class UpdateProduserimpl implements UpdateProducer {
+public class UpdateProducerimpl implements UpdateProducer {
 
     public final RabbitTemplate rabbitTemplate;
 
-    public UpdateProduserimpl(RabbitTemplate rabbitTemplate) {
+    public UpdateProducerimpl(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
     }
 
     @Override
-    public void produce(String rabbitmq, Update update) {
+    public void produce(String rabbitQueue, Update update) {
         log.debug(update.getMessage().getText());
         rabbitTemplate.convertAndSend(rabbitQueue, update);
     }

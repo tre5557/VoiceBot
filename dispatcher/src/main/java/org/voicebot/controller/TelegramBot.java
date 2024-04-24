@@ -32,12 +32,12 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return "best_talking_bot";
+        return botName;
     }
 
     @Override
     public String getBotToken() {
-        return "7042409055:AAFHfRwLJblyeHcasggLRVB0HFlfFlGH1RU";
+        return botToken;
     }
 
     @Override

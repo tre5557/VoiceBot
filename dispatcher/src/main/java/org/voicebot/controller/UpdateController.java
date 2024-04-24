@@ -66,7 +66,7 @@ public class UpdateController {
         setVIew(sendMessage);
     }
 
-    private void setVIew(SendMessage sendMessage) {
+    public void setVIew(SendMessage sendMessage) {
         telegramBot.sendAnswearMessage(sendMessage);
     }
 
