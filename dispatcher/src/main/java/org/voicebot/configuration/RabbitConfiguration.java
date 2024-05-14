@@ -11,11 +11,13 @@ import static org.voicebot.model.RabbitQueue.*;
 
 @Configuration
 public class RabbitConfiguration {
+    // это json converter, который будет преобразовывать наш Update в json формат и передавать в rabbimq
+    // и при получении из json уже в объект java
     @Bean
     public MessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();
     }
-
+// дальше 4 бина, каждый из которых - очередь в раббите. Имена берез из констант, которые сделали заранее
     @Bean
     public Queue textMessageQueue() {
         return new Queue(TEXT_MESSAGE_UPDATE);

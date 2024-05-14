@@ -8,7 +8,7 @@ import org.voicebot.service.ConsumerService;
 import org.voicebot.service.MainService;
 
 import static org.voicebot.model.RabbitQueue.*;
-
+// Считываем сообщения из брокера
 @Service
 @Log4j
 public class ConsumerServiceImpl implements ConsumerService {
@@ -19,21 +19,24 @@ public class ConsumerServiceImpl implements ConsumerService {
     }
 
     @Override
-    @RabbitListener(queues = TEXT_MESSAGE_UPDATE)
+    @RabbitListener(queues = TEXT_MESSAGE_UPDATE)// слушает очередь и принимает оттуда update
     public void consumeTextMessageUpdates(Update update) {
         log.debug("NODE : text message is received");
-        mainService.processTextMessage(update);
+        mainService.processTextMessage(update);// передаем update в mainservice
     }
 
     @Override
     @RabbitListener(queues = DOC_MESSAGE_UPDATE)
     public void consumeDocMessageUpdates(Update update) {
         log.debug("NODE : Doc message is received");
+        mainService.processDocMessage(update);
     }
 
     @Override
     @RabbitListener(queues = PHOTO_MESSAGE_UPDATE)
     public void consumePhotoMessageUpdates(Update update) {
         log.debug("NODE : Photo message is received");
+        mainService.processPhotoMessage(update);
+
     }
 }

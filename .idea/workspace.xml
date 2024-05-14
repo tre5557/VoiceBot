@@ -4,17 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6bf7a922-c101-49a7-9f1e-45a3224635e3" name="Changes" comment="gitignore 2">
-      <change afterPath="$PROJECT_DIR$/node/src/main/java/org/voicebot/dao/RawDataDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node/src/main/java/org/voicebot/entity/RawData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node/src/main/java/org/voicebot/service/MainService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node/src/main/java/org/voicebot/service/impl/MainServiceImpl.java" afterDir="false" />
+    <list default="true" id="6bf7a922-c101-49a7-9f1e-45a3224635e3" name="Changes" comment="added data base">
+      <change afterPath="$PROJECT_DIR$/common-jpa/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common-jpa/src/main/java/org/voicebot/dao/AppUserDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common-jpa/src/main/java/org/voicebot/entity/AppUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common-jpa/src/main/java/org/voicebot/entity/enums/UserState.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node/src/main/java/org/voicebot/service/enums/ServiceCommands.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-rabbitmq/src/main/java/org/voicebot/model/RabbitQueue.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-rabbitmq/src/main/java/org/voicebot/model/RabbitQueue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dispatcher/src/main/java/org/voicebot/configuration/RabbitConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/dispatcher/src/main/java/org/voicebot/configuration/RabbitConfiguration.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dispatcher/src/main/java/org/voicebot/controller/UpdateController.java" beforeDir="false" afterPath="$PROJECT_DIR$/dispatcher/src/main/java/org/voicebot/controller/UpdateController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dispatcher/src/main/java/org/voicebot/service/impl/AnswerConsumerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/dispatcher/src/main/java/org/voicebot/service/impl/AnswerConsumerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dispatcher/src/main/java/org/voicebot/service/impl/UpdateProducerimpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/dispatcher/src/main/java/org/voicebot/service/impl/UpdateProducerimpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/node/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node/src/main/java/org/voicebot/dao/RawDataDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/node/src/main/java/org/voicebot/dao/RawDataDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node/src/main/java/org/voicebot/entity/RawData.java" beforeDir="false" afterPath="$PROJECT_DIR$/node/src/main/java/org/voicebot/entity/RawData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node/src/main/java/org/voicebot/service/ConsumerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/node/src/main/java/org/voicebot/service/ConsumerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node/src/main/java/org/voicebot/service/MainService.java" beforeDir="false" afterPath="$PROJECT_DIR$/node/src/main/java/org/voicebot/service/MainService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node/src/main/java/org/voicebot/service/impl/ConsumerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/node/src/main/java/org/voicebot/service/impl/ConsumerServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node/src/main/java/org/voicebot/service/impl/MainServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/node/src/main/java/org/voicebot/service/impl/MainServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node/src/main/java/org/voicebot/service/impl/ProducerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/node/src/main/java/org/voicebot/service/impl/ProducerServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/node/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node/src/main/resources/log4j.properties" beforeDir="false" afterPath="$PROJECT_DIR$/node/src/main/resources/log4j.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,8 +36,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -79,7 +92,7 @@
       <recent name="org.voicebot.configuration" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.DispatcherApplication">
+  <component name="RunManager" selected="Application.NodeApplication">
     <configuration name="DispatcherApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.voicebot.DispatcherApplication" />
       <module name="dispatcher" />
@@ -108,8 +121,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.DispatcherApplication" />
         <item itemvalue="Application.NodeApplication" />
+        <item itemvalue="Application.DispatcherApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -143,7 +156,14 @@
       <option name="project" value="LOCAL" />
       <updated>1713982075860</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="added data base">
+      <created>1714367070677</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1714367070677</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -173,7 +193,8 @@
     <MESSAGE value="first commit" />
     <MESSAGE value="gitignore" />
     <MESSAGE value="gitignore 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="gitignore 2" />
+    <MESSAGE value="added data base" />
+    <option name="LAST_COMMIT_MESSAGE" value="added data base" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -183,9 +204,24 @@
           <option name="timeStamp" value="1" />
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/dispatcher/src/main/java/org/voicebot/service/impl/AnswerConsumerImpl.java</url>
-          <line>22</line>
-          <option name="timeStamp" value="3" />
+          <url>file://$PROJECT_DIR$/dispatcher/src/main/java/org/voicebot/service/impl/UpdateProducerimpl.java</url>
+          <line>23</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/dispatcher/src/main/java/org/voicebot/controller/UpdateController.java</url>
+          <line>85</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/node/src/main/java/org/voicebot/service/impl/MainServiceImpl.java</url>
+          <line>115</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/node/src/main/java/org/voicebot/service/impl/MainServiceImpl.java</url>
+          <line>114</line>
+          <option name="timeStamp" value="25" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

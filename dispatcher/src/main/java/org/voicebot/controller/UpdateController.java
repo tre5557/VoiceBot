@@ -81,7 +81,7 @@ public class UpdateController {
         updateProducer.produce(DOC_MESSAGE_UPDATE, update);
         setFileIsReceivedView(update);
     }
-
+// Метод передает наш update в указанную очередь rabbitMQ
     private void processTextMessage(Update update) {
         updateProducer.produce(TEXT_MESSAGE_UPDATE, update);
     }
