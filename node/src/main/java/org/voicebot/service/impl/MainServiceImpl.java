@@ -3,7 +3,6 @@ package org.voicebot.service.impl;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.voicebot.dao.AppUserDAO;
@@ -12,6 +11,8 @@ import org.voicebot.entity.AppUser;
 import org.voicebot.entity.RawData;
 import org.voicebot.service.MainService;
 import org.voicebot.service.ProducerService;
+import org.voicebot.service.openai.api.ChatCompletionRequest;
+import org.voicebot.service.openai.api.OpenAIClient;
 
 import static org.voicebot.entity.enums.UserState.BASIC_STATE;
 import static org.voicebot.entity.enums.UserState.WAIT_FOR_EMAIL_STATE;
@@ -25,10 +26,13 @@ public class MainServiceImpl implements MainService {
     private final ProducerService producerService;
     private final AppUserDAO appUserDAO;
 
-    public MainServiceImpl(RawDataDAO rawDataDAO, ProducerService producerService, AppUserDAO appUserDAO) {
+    private final OpenAIClient openAIClient;
+
+    public MainServiceImpl(RawDataDAO rawDataDAO, ProducerService producerService, AppUserDAO appUserDAO, OpenAIClient openAIClient) {
         this.rawDataDAO = rawDataDAO;
         this.producerService = producerService;
         this.appUserDAO = appUserDAO;
+        this.openAIClient = openAIClient;
     }
 
     @Override
@@ -39,19 +43,31 @@ public class MainServiceImpl implements MainService {
         var text = update.getMessage().getText();
         var output = "";
 
-        if(CANCEL.isEqual(text)){
-            output = cancelProcess(appUser);
-        } else if (BASIC_STATE.equals(userState)){
-            output = processServiceCommand(appUser, text);
-        } else if (WAIT_FOR_EMAIL_STATE.equals(userState)) {
-            // TODO добваить обработку емейла
-        } else {
-            log.error("Unknown user state " + userState);
-            output = "Неизвестная ошибка! Нажимте /cancel и попробуйте снова!";
-        }
 
+        // тест блока с AI
+
+        var chatCompletionResponse = openAIClient.createChatCompletion(text);
+
+        var messageFromGpt = chatCompletionResponse.choices().get(0).message().content();
         var chatId = update.getMessage().getChatId();
-        sendAnswer(output, chatId);
+        sendAnswer(messageFromGpt, chatId);
+
+
+
+//        if(CANCEL.isEqual(text)){
+//            output = cancelProcess(appUser);
+//        } else if (BASIC_STATE.equals(userState)){
+//            output = processServiceCommand(appUser, text);
+//        } else if (WAIT_FOR_EMAIL_STATE.equals(userState)) {
+//            // TODO добваить обработку емейла
+//        } else {
+//            log.error("Unknown user state " + userState);
+//            output = "Неизвестная ошибка! Нажимте /cancel и попробуйте снова!";
+//        }
+//
+//     var chatId = update.getMessage().getChatId();
+//        log.debug("NODE : answer is ready");
+//        sendAnswer(output, chatId);
 
 
 
