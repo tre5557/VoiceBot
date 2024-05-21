@@ -1,6 +1,6 @@
 package org.voicebot.service.openai.api;
 
-import lombok.AllArgsConstructor;
+
 import lombok.Data;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
