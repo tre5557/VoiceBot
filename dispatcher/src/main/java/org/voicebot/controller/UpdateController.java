@@ -2,9 +2,14 @@ package org.voicebot.controller;
 
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendVoice;
+import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.voicebot.service.UpdateProducer;
+import org.voicebot.service.telegramVoiceService.TelergamVoiceHandler;
+import org.voicebot.service.telegramVoiceService.VoiceCreator.TelegramVoiceCreator;
 import org.voicebot.utils.MessageUtils;
 
 import static org.voicebot.model.RabbitQueue.*;
@@ -16,10 +21,15 @@ public class UpdateController {
     private TelegramBot telegramBot;
     private final MessageUtils messageUtils;
     private final UpdateProducer updateProducer;
+    private final TelergamVoiceHandler telergamVoiceHandler;
+    private final TelegramVoiceCreator telergamVoicecreator;
 
-    public UpdateController(MessageUtils messageUtils, UpdateProducer updateProducer) {
+
+    public UpdateController(MessageUtils messageUtils, UpdateProducer updateProducer, TelergamVoiceHandler telergamVoiceHandler, TelegramVoiceCreator telergamVoicecreator) {
         this.messageUtils = messageUtils;
         this.updateProducer = updateProducer;
+        this.telergamVoiceHandler = telergamVoiceHandler;
+        this.telergamVoicecreator = telergamVoicecreator;
     }
 
     public void registerBot(TelegramBot telegramBot){
@@ -42,8 +52,15 @@ public class UpdateController {
 
     private void distributeMessageByType(Update update){
         var message = update.getMessage();
-        if (message.hasText()){
+        if (message.hasVoice()){
+            var transcription = telergamVoiceHandler.processVoice(update);
+            message.setText(transcription);
+            update.setMessage(message);
             processTextMessage(update);
+        }
+        else if (message.hasText()){
+            textToVoiceHandler(update);
+//            processTextMessage(update);
         }
         else if (message.hasDocument()){
             processDocMessage(update);
@@ -55,6 +72,8 @@ public class UpdateController {
             setUnsupportedMessageTypeView(update);
         }
     }
+
+
 
     private void setUnsupportedMessageTypeView(Update update) {
         var sendMessage = messageUtils.generateSendMessageWithText(update,"Неподдерживаемое сообщение");
@@ -68,6 +87,8 @@ public class UpdateController {
 
     public void setVIew(SendMessage sendMessage) {
         telegramBot.sendAnswearMessage(sendMessage);
+    }    public void setVoiceVIew(SendVoice sendVoice) {
+        telegramBot.sendAnswearVoice(sendVoice);
     }
 
     private void processPhotoMessage(Update update) {
@@ -85,5 +106,10 @@ public class UpdateController {
     private void processTextMessage(Update update) {
         updateProducer.produce(TEXT_MESSAGE_UPDATE, update);
     }
-
+    private void textToVoiceHandler(Update update) {
+        String text = update.getMessage().getText();
+        InputFile audiofile =  telergamVoicecreator.createVoice(text);
+        SendVoice sendVoice = messageUtils.generateSendMessageWithAudio(update, audiofile);
+        setVoiceVIew(sendVoice);
+    }
 }
