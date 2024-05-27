@@ -102,6 +102,7 @@ public class MainServiceImpl implements MainService {
         //TODO добавить сохранение документа
         var answer = "Фото успешно загружено! Ссылка для скачивания: http://test/get-photo/777";
         sendAnswer(answer,chatId);
+        sendAnswer(answer,chatId);
 
     }
 

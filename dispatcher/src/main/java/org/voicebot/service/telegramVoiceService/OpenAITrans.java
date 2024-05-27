@@ -60,7 +60,7 @@ public class OpenAITrans {
         Map<String, String> data = new HashMap<>();
         data.put("model", "tts-1");
         data.put("input", text);
-        data.put("voice", "alloy");  // Укажите нужный голос и язык
+        data.put("voice", "alloy");
 
         ObjectMapper objectMapper = new ObjectMapper();
         String requestBody = objectMapper.writeValueAsString(data);

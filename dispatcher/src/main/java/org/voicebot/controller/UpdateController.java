@@ -6,6 +6,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendVoice;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.voicebot.service.UpdateProducer;
 import org.voicebot.service.telegramVoiceService.TelergamVoiceHandler;
@@ -52,15 +53,12 @@ public class UpdateController {
 
     private void distributeMessageByType(Update update){
         var message = update.getMessage();
-        if (message.hasVoice()){
-            var transcription = telergamVoiceHandler.processVoice(update);
-            message.setText(transcription);
-            update.setMessage(message);
+           if (message.hasText()){
+//           textToVoiceHandler(update);
             processTextMessage(update);
         }
-        else if (message.hasText()){
-            textToVoiceHandler(update);
-//            processTextMessage(update);
+        else if (message.hasVoice()){
+            processVoiceMessage(update);
         }
         else if (message.hasDocument()){
             processDocMessage(update);
@@ -87,7 +85,8 @@ public class UpdateController {
 
     public void setVIew(SendMessage sendMessage) {
         telegramBot.sendAnswearMessage(sendMessage);
-    }    public void setVoiceVIew(SendVoice sendVoice) {
+    }
+    public void setVoiceVIew(SendVoice sendVoice) {
         telegramBot.sendAnswearVoice(sendVoice);
     }
 
@@ -106,10 +105,18 @@ public class UpdateController {
     private void processTextMessage(Update update) {
         updateProducer.produce(TEXT_MESSAGE_UPDATE, update);
     }
-    private void textToVoiceHandler(Update update) {
-        String text = update.getMessage().getText();
-        InputFile audiofile =  telergamVoicecreator.createVoice(text);
-        SendVoice sendVoice = messageUtils.generateSendMessageWithAudio(update, audiofile);
-        setVoiceVIew(sendVoice);
+    private void processVoiceMessage(Update update) {
+        var transcription = telergamVoiceHandler.processVoice(update);
+        var message = update.getMessage();
+        message.setText(transcription);
+        update.setMessage(message);
+        updateProducer.produce(TEXT_MESSAGE_UPDATE, update);
     }
+//    private void textToVoiceHandler(Update update) {
+//        String text = update.getMessage().getText();
+////        updateProducer.produce(TEXT_MESSAGE_UPDATE, update);
+//        InputFile audiofile =  telergamVoicecreator.createVoice(text);
+//        SendVoice sendVoice = messageUtils.generateSendMessageWithAudio(update, audiofile);
+//        setVoiceVIew(sendVoice);
+//    }
 }

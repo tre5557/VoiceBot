@@ -23,6 +23,7 @@ public class MessageUtils {
         SendVoice sendVoice = new SendVoice();
         sendVoice.setChatId(chatId);
         sendVoice.setVoice(audioFile);
+        sendVoice.setCaption("тест");
         return sendVoice;
     }
 }
