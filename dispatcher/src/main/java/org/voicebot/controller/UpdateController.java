@@ -112,11 +112,11 @@ public class UpdateController {
         update.setMessage(message);
         updateProducer.produce(TEXT_MESSAGE_UPDATE, update);
     }
-//    private void textToVoiceHandler(Update update) {
-//        String text = update.getMessage().getText();
-////        updateProducer.produce(TEXT_MESSAGE_UPDATE, update);
-//        InputFile audiofile =  telergamVoicecreator.createVoice(text);
-//        SendVoice sendVoice = messageUtils.generateSendMessageWithAudio(update, audiofile);
-//        setVoiceVIew(sendVoice);
-//    }
+    private void textToVoiceHandler(Update update) {
+        String text = update.getMessage().getText();
+//        updateProducer.produce(TEXT_MESSAGE_UPDATE, update);
+        InputFile audiofile =  telergamVoicecreator.createVoice(text);
+        SendVoice sendVoice = messageUtils.generateSendMessageWithAudio(update, audiofile);
+        setVoiceVIew(sendVoice);
+    }
 }

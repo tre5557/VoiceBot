@@ -37,4 +37,8 @@ public class RabbitConfiguration {
     public Queue answerMessageQueue() {
         return new Queue(ANSWER_MESSAGE);
     }
+    @Bean
+    public Queue answerVoiceMessageQueue() {
+        return new Queue(ANSWER_VOICE_MESSAGE);
+    }
 }

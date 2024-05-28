@@ -1,13 +1,16 @@
 package org.voicebot.service.impl;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendVoice;
 import org.voicebot.controller.UpdateController;
 import org.voicebot.service.AnswerVoiceConsumer;
+import org.voicebot.service.deserializer.SendVoiceDeserializer;
 
-import static org.voicebot.model.RabbitQueue.ANSWER_MESSAGE;
 
+import static org.voicebot.model.RabbitQueue.ANSWER_VOICE_MESSAGE;
+
+@Service
 public class AnswerVoiceConsumerImpl implements AnswerVoiceConsumer {
     private final UpdateController updateController;
 
@@ -16,8 +19,18 @@ public class AnswerVoiceConsumerImpl implements AnswerVoiceConsumer {
     }
 
     @Override
-    @RabbitListener(queues = ANSWER_MESSAGE)// слушает очередь answer
-    public void consume(SendVoice sendVoiceMessage) {
-        updateController.setVoiceVIew(sendVoiceMessage);
+    @RabbitListener(queues = ANSWER_VOICE_MESSAGE)// слушает очередь answer_voice
+    public void consume(String message) {
+        try {
+            // Десериализация сообщения
+            SendVoice sendVoice = SendVoiceDeserializer.deserializeSendVoice(message);
+            // Обработка объекта SendVoice
+            System.out.println("Received <" + sendVoice + ">");
+            updateController.setVoiceVIew(sendVoice);
+            // Здесь можно добавить дополнительную логику для обработки полученного сообщения
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Логирование ошибки или выполнение других действий
+        }
     }
 }

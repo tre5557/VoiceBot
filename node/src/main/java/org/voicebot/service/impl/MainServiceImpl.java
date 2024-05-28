@@ -3,6 +3,8 @@ package org.voicebot.service.impl;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendVoice;
+import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.voicebot.dao.AppUserDAO;
@@ -11,11 +13,11 @@ import org.voicebot.entity.AppUser;
 import org.voicebot.entity.RawData;
 import org.voicebot.service.MainService;
 import org.voicebot.service.ProducerService;
-import org.voicebot.service.openai.api.ChatCompletionRequest;
+import org.voicebot.service.ProducerVoiceService;
 import org.voicebot.service.openai.api.OpenAIClient;
+import org.voicebot.service.openai.api.VoiceCreator;
 
 import static org.voicebot.entity.enums.UserState.BASIC_STATE;
-import static org.voicebot.entity.enums.UserState.WAIT_FOR_EMAIL_STATE;
 import static org.voicebot.service.enums.ServiceCommands.*;
 
 //главный сервис через который будет просиходить обработка сообщений
@@ -24,15 +26,22 @@ import static org.voicebot.service.enums.ServiceCommands.*;
 public class MainServiceImpl implements MainService {
     private final RawDataDAO rawDataDAO;
     private final ProducerService producerService;
+    private final ProducerVoiceService producerVoiceService;
     private final AppUserDAO appUserDAO;
 
-    private final OpenAIClient openAIClient;
 
-    public MainServiceImpl(RawDataDAO rawDataDAO, ProducerService producerService, AppUserDAO appUserDAO, OpenAIClient openAIClient) {
+    private final OpenAIClient openAIClient;
+    private final VoiceCreator voiceCreator;
+
+
+
+    public MainServiceImpl(RawDataDAO rawDataDAO, ProducerService producerService, ProducerVoiceService producerVoiceService, AppUserDAO appUserDAO, OpenAIClient openAIClient, VoiceCreator voiceCreator) {
         this.rawDataDAO = rawDataDAO;
         this.producerService = producerService;
+        this.producerVoiceService = producerVoiceService;
         this.appUserDAO = appUserDAO;
         this.openAIClient = openAIClient;
+        this.voiceCreator = voiceCreator;
     }
 
     @Override
@@ -49,8 +58,11 @@ public class MainServiceImpl implements MainService {
         var chatCompletionResponse = openAIClient.createChatCompletion(text);
 
         var messageFromGpt = chatCompletionResponse.choices().get(0).message().content();
+
         var chatId = update.getMessage().getChatId();
-        sendAnswer(messageFromGpt, chatId);
+        InputFile audioFile = generateVoiceFromText(messageFromGpt);
+        sendVoiceAnswer(audioFile,update,messageFromGpt);
+//        sendAnswer(messageFromGpt, chatId);
 
 
 
@@ -71,6 +83,11 @@ public class MainServiceImpl implements MainService {
 
 
 
+    }
+
+    private InputFile generateVoiceFromText(String messageFromGpt) {
+        InputFile audiofile =  voiceCreator.createVoice(messageFromGpt);
+        return audiofile;
     }
 
     @Override
@@ -126,6 +143,17 @@ public class MainServiceImpl implements MainService {
         sendMessage.setChatId(chatId);
         sendMessage.setText(output);
         producerService.producerAnswer(sendMessage);
+    }
+    private void sendVoiceAnswer(InputFile audio, Update update,String textFromGpt) {
+        Long chatId = update.getMessage().getChatId();
+        SendVoice sendVoice = new SendVoice();
+        sendVoice.setChatId(chatId);
+        sendVoice.setVoice(audio);
+        if (textFromGpt != null){
+            sendVoice.setCaption(textFromGpt);
+        }
+
+        producerVoiceService.producerAnswer(sendVoice);
     }
 
     private String processServiceCommand(AppUser appUser, String cmd) {

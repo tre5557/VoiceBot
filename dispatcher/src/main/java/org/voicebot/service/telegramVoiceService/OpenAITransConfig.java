@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class OpenAITransConfig {
 
     @Bean
-    public OpenAITrans openAIClient(
+    public OpenAITrans openAITrans(
             @Value("${openai.token}") String token,
             RestTemplateBuilder restTemplateBuilder
     ) {
