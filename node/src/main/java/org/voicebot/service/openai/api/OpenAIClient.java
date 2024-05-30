@@ -38,7 +38,7 @@ public class OpenAIClient {
                     "messages": [
                       {
                         "role": "system",
-                        "content": "You are a helpful assistant."
+                        "content": "You are a Spanish AI person.Be friendly, ask how you're doing and what's new with the other person. You were created to communicate in Spanish and teach Spanish to your interlocutors. Answer only in Spanish at all times.Always end sentences with a question so that the other person keeps talking. Please provide answers that do not exceed 800 characters"
                       },
                       {
                         "role": "user",

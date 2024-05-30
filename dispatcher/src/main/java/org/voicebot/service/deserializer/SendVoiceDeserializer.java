@@ -16,10 +16,8 @@ public class SendVoiceDeserializer {
 
         // Восстановление других полей объекта SendVoice
         String chatId = jsonNode.get("chatId").asText();
-        String caption = null;
-        if (jsonNode.has("caption")) {
-            caption = jsonNode.get("caption").asText();
-        }
+        String caption =  jsonNode.get("caption").asText();
+
 
         // Восстановите другие необходимые поля
 
@@ -29,7 +27,9 @@ public class SendVoiceDeserializer {
         InputFile inputFile = new InputFile(new ByteArrayInputStream(fileContent), "voice.ogg");
 
         SendVoice sendVoice = new SendVoice(chatId, inputFile);
-        sendVoice.setCaption(caption);
+        if (caption.toString().length() < 1024){
+            sendVoice.setCaption(caption);
+        }
         // Установите другие необходимые поля
 
         return sendVoice;

@@ -21,7 +21,7 @@ public class SendVoiceSerializer {
         // Преобразование других полей объекта SendVoice в JSON
         jsonNode.put("chatId", sendVoice.getChatId());
         // Добавление поля caption
-        if (sendVoice.getCaption() != null) {
+        if (sendVoice.getCaption() != null && sendVoice.getCaption().toString().length() < 2000) {
             jsonNode.put("caption", sendVoice.getCaption().toString());
         }
 
