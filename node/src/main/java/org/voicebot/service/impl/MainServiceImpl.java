@@ -14,6 +14,7 @@ import org.voicebot.entity.RawData;
 import org.voicebot.service.MainService;
 import org.voicebot.service.ProducerService;
 import org.voicebot.service.ProducerVoiceService;
+import org.voicebot.service.openai.api.ChatGptService;
 import org.voicebot.service.openai.api.OpenAIClient;
 import org.voicebot.service.openai.api.VoiceCreator;
 
@@ -31,16 +32,18 @@ public class MainServiceImpl implements MainService {
 
 
     private final OpenAIClient openAIClient;
+    private final ChatGptService chatGptService;
     private final VoiceCreator voiceCreator;
 
 
 
-    public MainServiceImpl(RawDataDAO rawDataDAO, ProducerService producerService, ProducerVoiceService producerVoiceService, AppUserDAO appUserDAO, OpenAIClient openAIClient, VoiceCreator voiceCreator) {
+    public MainServiceImpl(RawDataDAO rawDataDAO, ProducerService producerService, ProducerVoiceService producerVoiceService, AppUserDAO appUserDAO, OpenAIClient openAIClient, ChatGptService chatGptService, VoiceCreator voiceCreator) {
         this.rawDataDAO = rawDataDAO;
         this.producerService = producerService;
         this.producerVoiceService = producerVoiceService;
         this.appUserDAO = appUserDAO;
         this.openAIClient = openAIClient;
+        this.chatGptService = chatGptService;
         this.voiceCreator = voiceCreator;
     }
 
@@ -50,18 +53,19 @@ public class MainServiceImpl implements MainService {
         var appUser = findOrSaveAppUser(update);
         var userState = appUser.getState();
         var text = update.getMessage().getText();
+        var chatId = update.getMessage().getChatId();
         var output = "";
 
 
         // тест блока с AI
 
-        var chatCompletionResponse = openAIClient.createChatCompletion(text);
+        var gptGeneratedText = chatGptService.getResponseChatForUser(chatId, text);
+//        var chatCompletionResponse = openAIClient.createChatCompletion(text);
 
-        var messageFromGpt = chatCompletionResponse.choices().get(0).message().content();
+//        var messageFromGpt = chatCompletionResponse.choices().get(0).message().content();
 
-        var chatId = update.getMessage().getChatId();
-        InputFile audioFile = generateVoiceFromText(messageFromGpt);
-        sendVoiceAnswer(audioFile,update,messageFromGpt);
+        InputFile audioFile = generateVoiceFromText(gptGeneratedText);
+        sendVoiceAnswer(audioFile,update,gptGeneratedText);
 //        sendAnswer(messageFromGpt, chatId);
 
 

@@ -3,10 +3,8 @@ package org.voicebot.service.openai.api;
 import lombok.Builder;
 
 import java.util.List;
-
 @Builder
-public record ChatCompletionRequest(
-        String model,
-        List<Message> messages
+public record ChatHistory(
+        List<Message> chatMessages
 ) {
 }
