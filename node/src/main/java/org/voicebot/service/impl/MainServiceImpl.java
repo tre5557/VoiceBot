@@ -56,16 +56,19 @@ public class MainServiceImpl implements MainService {
         var chatId = update.getMessage().getChatId();
         var output = "";
 
+        if(text.startsWith("/")){
+            processServiceCommand(chatId, text);
+        }
+        else{
+            // тест блока с AI
 
-        // тест блока с AI
-
-        var gptGeneratedText = chatGptService.getResponseChatForUser(chatId, text);
+            var gptGeneratedText = chatGptService.getResponseChatForUser(chatId, text);
 //        var chatCompletionResponse = openAIClient.createChatCompletion(text);
 
 //        var messageFromGpt = chatCompletionResponse.choices().get(0).message().content();
 
-        InputFile audioFile = generateVoiceFromText(gptGeneratedText);
-        sendVoiceAnswer(audioFile,update,gptGeneratedText);
+            InputFile audioFile = generateVoiceFromText(gptGeneratedText);
+            sendVoiceAnswer(audioFile,update,gptGeneratedText);
 //        sendAnswer(messageFromGpt, chatId);
 
 
@@ -84,6 +87,8 @@ public class MainServiceImpl implements MainService {
 //     var chatId = update.getMessage().getChatId();
 //        log.debug("NODE : answer is ready");
 //        sendAnswer(output, chatId);
+        }
+
 
 
 
@@ -160,25 +165,30 @@ public class MainServiceImpl implements MainService {
         producerVoiceService.producerAnswer(sendVoice);
     }
 
-    private String processServiceCommand(AppUser appUser, String cmd) {
+    private void processServiceCommand(Long chatId, String cmd) {
+        String answer = "";
         if (REGISTRATION.isEqual(cmd)){
             //TODO добавить реализацию позже
-            return "Временно недоступна";
+            answer = "Temporarily unavailable";
         } else if (HELP.isEqual(cmd)){
-            return help();
+            answer =  help();
         } else if (START.isEqual(cmd)) {
-            return "Приветствую, чтобы ввести список доступных комманд, введите /help";
+            answer = "Hello! This is a virtual AI interlocutor with whom you can communicate by voice. You can use different languages! Try it out!";
+        }
+        else if (CLEAR.isEqual(cmd)) {
+            answer = "Temporarily unavailable";
         }
         else {
-            System.out.println("test");
-           return "Неизвестная команда, чтобы ввести список доступных комманд, введите /help";
+
+            answer = "Unknown command to enter a list of available commands, type /help";
         }
+        sendAnswer(answer,chatId);
     }
 
     private String help() {
         return "Список доступных команд \n"
-                + "/cancel - отмена выполнения текущей команды \n"
-                + "/registration - регистрация пользователя";
+                + "/start - Restarting the bot \n"
+                + "/registration - user registration\n";
     }
 
     private String cancelProcess(AppUser appUser) {

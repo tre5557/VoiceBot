@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -25,9 +27,20 @@ public class ChatGptService {
                         .build()
         );
 
+        Message systemMessage = Message.builder()
+                .role("system")
+                .content("You are a AI person.Be friendly, ask how you're doing and what's new with the other person. " +
+                        "Always end sentences with a question so that the other person keeps talking. " +
+                        "Please provide answers that do not exceed 800 characters")
+                .build();
+
+        List<Message> messagesWithSystem = new ArrayList<>();
+        messagesWithSystem.add(systemMessage);
+        messagesWithSystem.addAll(history.chatMessages());
+
         var request = ChatCompletionRequest.builder()
                 .model("gpt-3.5-turbo-0125")
-                .messages(history.chatMessages())
+                .messages(messagesWithSystem)
                 .build();
         var response = openAIClient.createChatCompletion(request);
 
@@ -38,4 +51,6 @@ public class ChatGptService {
 
         return messageFromGpt.content();
     }
+
+
 }

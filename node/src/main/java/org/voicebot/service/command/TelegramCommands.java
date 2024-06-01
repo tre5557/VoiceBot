@@ -1,6 +1,7 @@
-package org.voicebot.service.enums;
+package org.voicebot.service.command;
 
-public enum ServiceCommands {
+public enum TelegramCommands {
+
     HELP("/help"),
     REGISTRATION("/registration"),
     CANCEL("/cancel"),
@@ -9,15 +10,15 @@ public enum ServiceCommands {
     private final String cmd;
 
 
-    ServiceCommands(String cmd) {
+    TelegramCommands(String cmd) {
         this.cmd = cmd;
     }
-@Override
+    @Override
     public String toString(){
         return cmd;
     }
 
     public boolean isEqual(String cmd){
-       return this.toString().equals(cmd);
+        return this.toString().equals(cmd);
     }
 }
