@@ -14,6 +14,7 @@ import org.voicebot.entity.RawData;
 import org.voicebot.service.MainService;
 import org.voicebot.service.ProducerService;
 import org.voicebot.service.ProducerVoiceService;
+import org.voicebot.service.command.TelegramCommandsDispatcher;
 import org.voicebot.service.openai.api.ChatGptService;
 import org.voicebot.service.openai.api.OpenAIClient;
 import org.voicebot.service.openai.api.VoiceCreator;
@@ -34,10 +35,13 @@ public class MainServiceImpl implements MainService {
     private final OpenAIClient openAIClient;
     private final ChatGptService chatGptService;
     private final VoiceCreator voiceCreator;
+    private final TelegramCommandsDispatcher telegramCommandsDispatcher;
 
 
 
-    public MainServiceImpl(RawDataDAO rawDataDAO, ProducerService producerService, ProducerVoiceService producerVoiceService, AppUserDAO appUserDAO, OpenAIClient openAIClient, ChatGptService chatGptService, VoiceCreator voiceCreator) {
+
+
+    public MainServiceImpl(RawDataDAO rawDataDAO, ProducerService producerService, ProducerVoiceService producerVoiceService, AppUserDAO appUserDAO, OpenAIClient openAIClient, ChatGptService chatGptService, VoiceCreator voiceCreator, TelegramCommandsDispatcher telegramCommandsDispatcher) {
         this.rawDataDAO = rawDataDAO;
         this.producerService = producerService;
         this.producerVoiceService = producerVoiceService;
@@ -45,6 +49,7 @@ public class MainServiceImpl implements MainService {
         this.openAIClient = openAIClient;
         this.chatGptService = chatGptService;
         this.voiceCreator = voiceCreator;
+        this.telegramCommandsDispatcher = telegramCommandsDispatcher;
     }
 
     @Override
@@ -56,8 +61,9 @@ public class MainServiceImpl implements MainService {
         var chatId = update.getMessage().getChatId();
         var output = "";
 
-        if(text.startsWith("/")){
-            processServiceCommand(chatId, text);
+        if(telegramCommandsDispatcher.isCommand(text)){
+            output = telegramCommandsDispatcher.processCommand(update);
+            sendAnswer(output,chatId);
         }
         else{
             // тест блока с AI

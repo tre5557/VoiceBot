@@ -18,7 +18,8 @@ public enum TelegramCommands {
         return cmd;
     }
 
-    public boolean isEqual(String cmd){
-        return this.toString().equals(cmd);
+    public String getCommandValue() {
+        return cmd;
     }
+
 }
