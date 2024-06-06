@@ -2,6 +2,7 @@ package org.voicebot.service.impl;
 
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
+import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendVoice;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
@@ -105,53 +106,11 @@ public class MainServiceImpl implements MainService {
         return audiofile;
     }
 
-    @Override
-    public void processDocMessage(Update update) {
-        saveRawData(update);
-        var appUser = findOrSaveAppUser(update);
-        var chatId = update.getMessage().getChatId();
-        if(IsNotAllowedToSendContent(chatId,appUser)){
-            return;
-        }
-
-        //TODO добавить сохранение документа
-        var answer = "Документ успешно загружен! Ссылка для скачивания: http://test/get-doc/777";
-        sendAnswer(answer,chatId);
 
 
-    }
 
 
-    @Override
-    public void processPhotoMessage(Update update) {
-        saveRawData(update);
-        var appUser = findOrSaveAppUser(update);
-        var chatId = update.getMessage().getChatId();
-        if(IsNotAllowedToSendContent(chatId,appUser)){
-            return;
-        }
 
-        //TODO добавить сохранение документа
-        var answer = "Фото успешно загружено! Ссылка для скачивания: http://test/get-photo/777";
-        sendAnswer(answer,chatId);
-        sendAnswer(answer,chatId);
-
-    }
-
-    private boolean IsNotAllowedToSendContent(Long chatId, AppUser appUser) {
-        var userState = appUser.getState();
-        if (!appUser.getIsActive()){
-            var error = "Зарегестрируйте свою учетную запись!";
-            sendAnswer(error,chatId);
-            return true;
-        }
-        else if(!BASIC_STATE.equals(userState)) {
-            var error = "отмените текущую команду с помощью /cancel для отправки файлов";
-            sendAnswer(error,chatId);
-            return true;
-        }
-        return false;
-    }
 
     private void sendAnswer(String output, Long chatId) {
         SendMessage sendMessage = new SendMessage();
@@ -169,38 +128,6 @@ public class MainServiceImpl implements MainService {
         }
 
         producerVoiceService.producerAnswer(sendVoice);
-    }
-
-    private void processServiceCommand(Long chatId, String cmd) {
-        String answer = "";
-        if (REGISTRATION.isEqual(cmd)){
-            //TODO добавить реализацию позже
-            answer = "Temporarily unavailable";
-        } else if (HELP.isEqual(cmd)){
-            answer =  help();
-        } else if (START.isEqual(cmd)) {
-            answer = "Hello! This is a virtual AI interlocutor with whom you can communicate by voice. You can use different languages! Try it out!";
-        }
-        else if (CLEAR.isEqual(cmd)) {
-            answer = "Temporarily unavailable";
-        }
-        else {
-
-            answer = "Unknown command to enter a list of available commands, type /help";
-        }
-        sendAnswer(answer,chatId);
-    }
-
-    private String help() {
-        return "Список доступных команд \n"
-                + "/start - Restarting the bot \n"
-                + "/registration - user registration\n";
-    }
-
-    private String cancelProcess(AppUser appUser) {
-        appUser.setState(BASIC_STATE);
-        appUserDAO.save(appUser);
-        return "Команда отменена";
     }
 
     //сохранение пользователя в базу
