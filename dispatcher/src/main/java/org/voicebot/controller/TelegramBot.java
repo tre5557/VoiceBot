@@ -8,10 +8,16 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendVoice;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageCaption;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Component /* Спринг сможет создать из класса бин и поместить его в контекст*/
@@ -68,6 +74,14 @@ public class TelegramBot extends TelegramLongPollingBot {
         }
 
     }
-
+//    public void sendEditCaptionMessage(EditMessageCaption editMessageCaption){
+//        if (editMessageCaption != null){
+//            try{
+//                execute(editMessageCaption);
+//            } catch(TelegramApiException e ) {
+//                log.error(e);
+//            }
+//        }
+//    }
 
 }

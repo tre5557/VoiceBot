@@ -5,13 +5,19 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendAudio;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendVoice;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageCaption;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.voicebot.service.UpdateProducer;
 import org.voicebot.service.telegramVoiceService.TelergamVoiceHandler;
 import org.voicebot.service.telegramVoiceService.VoiceCreator.TelegramVoiceCreator;
 import org.voicebot.utils.MessageUtils;
+
+import java.util.ArrayList;
 
 import static org.voicebot.model.RabbitQueue.*;
 
@@ -53,8 +59,8 @@ public class UpdateController {
 
     private void distributeMessageByType(Update update){
         var message = update.getMessage();
+
            if (message.hasText()){
-//           textToVoiceHandler(update);
             processTextMessage(update);
         }
         else if (message.hasVoice()){
@@ -90,12 +96,11 @@ public class UpdateController {
         telegramBot.sendAnswearVoice(sendVoice);
     }
 
+
     private void processPhotoMessage(Update update) {
         updateProducer.produce(PHOTO_MESSAGE_UPDATE, update);
         setFileIsReceivedView(update);
     }
-
-
 
     private void processDocMessage(Update update) {
         updateProducer.produce(DOC_MESSAGE_UPDATE, update);
@@ -111,12 +116,5 @@ public class UpdateController {
         message.setText(transcription);
         update.setMessage(message);
         updateProducer.produce(TEXT_MESSAGE_UPDATE, update);
-    }
-    private void textToVoiceHandler(Update update) {
-        String text = update.getMessage().getText();
-//        updateProducer.produce(TEXT_MESSAGE_UPDATE, update);
-        InputFile audiofile =  telergamVoicecreator.createVoice(text);
-        SendVoice sendVoice = messageUtils.generateSendMessageWithAudio(update, audiofile);
-        setVoiceVIew(sendVoice);
     }
 }

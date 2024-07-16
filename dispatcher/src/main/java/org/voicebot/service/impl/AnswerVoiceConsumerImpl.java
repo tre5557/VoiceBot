@@ -3,10 +3,15 @@ package org.voicebot.service.impl;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendVoice;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.voicebot.controller.UpdateController;
 import org.voicebot.service.AnswerVoiceConsumer;
 import org.voicebot.service.deserializer.SendVoiceDeserializer;
 
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.voicebot.model.RabbitQueue.ANSWER_VOICE_MESSAGE;
 
@@ -26,6 +31,7 @@ public class AnswerVoiceConsumerImpl implements AnswerVoiceConsumer {
             SendVoice sendVoice = SendVoiceDeserializer.deserializeSendVoice(message);
             // Обработка объекта SendVoice
             System.out.println("Received <" + sendVoice + ">");
+
             updateController.setVoiceVIew(sendVoice);
             // Здесь можно добавить дополнительную логику для обработки полученного сообщения
         } catch (Exception e) {

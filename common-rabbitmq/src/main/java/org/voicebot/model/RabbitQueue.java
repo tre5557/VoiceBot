@@ -1,6 +1,6 @@
 package org.voicebot.model;
 
-//это названия очередей для rabbitMQ которые будут использоваться из разных мест, чтобы не дублировать код делаем отдельный класс
+//это названия очередей для rabbitMQ которые будут использоваться из разных мест, чтобы не дублировать код, делаем отдельный класс
 
 public class RabbitQueue {
     public static final String DOC_MESSAGE_UPDATE = "doc_message_update";

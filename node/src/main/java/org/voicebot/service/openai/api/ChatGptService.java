@@ -29,7 +29,7 @@ public class ChatGptService {
 
         Message systemMessage = Message.builder()
                 .role("system")
-                .content("You are a AI person.Be friendly, ask how you're doing and what's new with the other person. " +
+                .content("You are a AI teacher of spanish language. You must talk only in English and Spanish. Be friendly, ask how you're doing and what's new with the other person. " +
                         "Always end sentences with a question so that the other person keeps talking. " +
                         "Please provide answers that do not exceed 800 characters")
                 .build();

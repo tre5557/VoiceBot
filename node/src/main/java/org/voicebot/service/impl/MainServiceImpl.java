@@ -70,46 +70,15 @@ public class MainServiceImpl implements MainService {
             // тест блока с AI
 
             var gptGeneratedText = chatGptService.getResponseChatForUser(chatId, text);
-//        var chatCompletionResponse = openAIClient.createChatCompletion(text);
-
-//        var messageFromGpt = chatCompletionResponse.choices().get(0).message().content();
-
             InputFile audioFile = generateVoiceFromText(gptGeneratedText);
             sendVoiceAnswer(audioFile,update,gptGeneratedText);
-//        sendAnswer(messageFromGpt, chatId);
-
-
-
-//        if(CANCEL.isEqual(text)){
-//            output = cancelProcess(appUser);
-//        } else if (BASIC_STATE.equals(userState)){
-//            output = processServiceCommand(appUser, text);
-//        } else if (WAIT_FOR_EMAIL_STATE.equals(userState)) {
-//            // TODO добваить обработку емейла
-//        } else {
-//            log.error("Unknown user state " + userState);
-//            output = "Неизвестная ошибка! Нажимте /cancel и попробуйте снова!";
-//        }
-//
-//     var chatId = update.getMessage().getChatId();
-//        log.debug("NODE : answer is ready");
-//        sendAnswer(output, chatId);
         }
-
-
-
-
     }
 
     private InputFile generateVoiceFromText(String messageFromGpt) {
         InputFile audiofile =  voiceCreator.createVoice(messageFromGpt);
         return audiofile;
     }
-
-
-
-
-
 
 
     private void sendAnswer(String output, Long chatId) {
