@@ -19,7 +19,9 @@ public class ChatGptService {
             String userTextInput
     ) {
         chatGptHistoryService.createHistoryIfNotExist(userId);
-        var history = chatGptHistoryService.addMessageToHistory(
+
+        // Добавляем сообщение пользователя в историю и получаем обновленный объект истории
+        var chatHistoryEntity = chatGptHistoryService.addMessageToHistory(
                 userId,
                 Message.builder()
                         .content(userTextInput)
@@ -27,23 +29,29 @@ public class ChatGptService {
                         .build()
         );
 
+        // Создаем системное сообщение
         Message systemMessage = Message.builder()
                 .role("system")
-                .content("You are a AI teacher of spanish language. You must talk only in English and Spanish. Be friendly, ask how you're doing and what's new with the other person. " +
+                .content("You are an AI teacher of English language. You must talk only in English and Russian. Be friendly, ask how you're doing and what's new with the other person. " +
                         "Always end sentences with a question so that the other person keeps talking. " +
                         "Please provide answers that do not exceed 800 characters")
                 .build();
 
+        // Создаем список сообщений для запроса
         List<Message> messagesWithSystem = new ArrayList<>();
         messagesWithSystem.add(systemMessage);
-        messagesWithSystem.addAll(history.chatMessages());
+        messagesWithSystem.addAll(chatHistoryEntity.getChatHistory().chatMessages());
 
+        // Создаем запрос к OpenAI
         var request = ChatCompletionRequest.builder()
                 .model("gpt-3.5-turbo-0125")
                 .messages(messagesWithSystem)
                 .build();
+
+        // Получаем ответ от OpenAI
         var response = openAIClient.createChatCompletion(request);
 
+        // Добавляем ответ GPT в историю
         var messageFromGpt = response.choices().get(0)
                 .message();
 
@@ -51,6 +59,4 @@ public class ChatGptService {
 
         return messageFromGpt.content();
     }
-
-
 }

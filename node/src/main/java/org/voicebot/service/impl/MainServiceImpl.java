@@ -55,11 +55,12 @@ public class MainServiceImpl implements MainService {
 
     @Override
     public void processTextMessage(Update update) {
-        saveRawData(update);
-        var appUser = findOrSaveAppUser(update);
+        saveRawData(update);// сохраняю пришедший update в базу данных
+        var appUser = findOrSaveAppUser(update);// проверяю или сохраняю нового пользователя
         var userState = appUser.getState();
         var text = update.getMessage().getText();
         var chatId = update.getMessage().getChatId();
+        var userId = update.getMessage().getFrom().getId();
         var output = "";
 
         if(telegramCommandsDispatcher.isCommand(text)){
@@ -69,7 +70,7 @@ public class MainServiceImpl implements MainService {
         else{
             // тест блока с AI
 
-            var gptGeneratedText = chatGptService.getResponseChatForUser(chatId, text);
+            var gptGeneratedText = chatGptService.getResponseChatForUser(userId, text);
             InputFile audioFile = generateVoiceFromText(gptGeneratedText);
             sendVoiceAnswer(audioFile,update,gptGeneratedText);
         }

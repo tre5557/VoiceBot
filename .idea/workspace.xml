@@ -4,14 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6bf7a922-c101-49a7-9f1e-45a3224635e3" name="Changes" comment="fixed something">
+    <list default="true" id="6bf7a922-c101-49a7-9f1e-45a3224635e3" name="Changes" comment="Added limit on languages for AI">
+      <change afterPath="$PROJECT_DIR$/dispatcher/src/test/java/org/voicebot/controller/TelegramBotTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node/src/main/java/org/voicebot/dao/ChatHistoryDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node/src/main/java/org/voicebot/entity/ChatHistoryEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-rabbitmq/src/main/java/org/voicebot/model/RabbitQueue.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-rabbitmq/src/main/java/org/voicebot/model/RabbitQueue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dispatcher/src/main/java/org/voicebot/controller/TelegramBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/dispatcher/src/main/java/org/voicebot/controller/TelegramBot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dispatcher/src/main/java/org/voicebot/controller/UpdateController.java" beforeDir="false" afterPath="$PROJECT_DIR$/dispatcher/src/main/java/org/voicebot/controller/UpdateController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dispatcher/src/main/java/org/voicebot/service/impl/AnswerVoiceConsumerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/dispatcher/src/main/java/org/voicebot/service/impl/AnswerVoiceConsumerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node/src/main/java/org/voicebot/entity/RawData.java" beforeDir="false" afterPath="$PROJECT_DIR$/node/src/main/java/org/voicebot/entity/RawData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dispatcher/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dispatcher/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node/src/main/java/org/voicebot/service/impl/MainServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/node/src/main/java/org/voicebot/service/impl/MainServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node/src/main/java/org/voicebot/service/openai/api/ChatGptHistoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/node/src/main/java/org/voicebot/service/openai/api/ChatGptHistoryService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node/src/main/java/org/voicebot/service/openai/api/ChatGptService.java" beforeDir="false" afterPath="$PROJECT_DIR$/node/src/main/java/org/voicebot/service/openai/api/ChatGptService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -24,8 +24,8 @@
       <list>
         <option value="package-info" />
         <option value="Enum" />
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -39,20 +39,8 @@
     <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="JpbToolWindowState">
-    <option name="myId2FirstActivated">
-      <map>
-        <entry key="com.haulmont.jpb.jpaInspector" value="true" />
-        <entry key="com.haulmont.jpb.jpaPalette" value="true" />
-        <entry key="com.haulmont.jpb.jpaStructure" value="true" />
-      </map>
-    </option>
-    <option name="myId2Visible">
-      <map>
-        <entry key="com.haulmont.jpb.jpaInspector" value="false" />
-        <entry key="com.haulmont.jpb.jpaPalette" value="false" />
-        <entry key="com.haulmont.jpb.jpaStructure" value="false" />
-      </map>
-    </option>
+    <option name="isToolWindowVisible" value="false" />
+    <option name="isSearchInLibrariesForStructure" value="false" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -117,10 +105,60 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TelegramBotTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="dispatcher" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.voicebot.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.voicebot.controller" />
+      <option name="MAIN_CLASS_NAME" value="org.voicebot.controller.TelegramBotTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TelegramBotTest.testOnUpdateReceived" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="dispatcher" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.voicebot.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.voicebot.controller" />
+      <option name="MAIN_CLASS_NAME" value="org.voicebot.controller.TelegramBotTest" />
+      <option name="METHOD_NAME" value="testOnUpdateReceived" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TelegramBotTest.testSendAnswearMessage" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="dispatcher" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.voicebot.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.voicebot.controller" />
+      <option name="MAIN_CLASS_NAME" value="org.voicebot.controller.TelegramBotTest" />
+      <option name="METHOD_NAME" value="testSendAnswearMessage" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.NodeApplication" />
         <item itemvalue="Application.DispatcherApplication" />
+        <item itemvalue="JUnit.TelegramBotTest.testSendAnswearMessage" />
+        <item itemvalue="JUnit.TelegramBotTest.testOnUpdateReceived" />
+        <item itemvalue="JUnit.TelegramBotTest" />
       </list>
     </recent_temporary>
   </component>
