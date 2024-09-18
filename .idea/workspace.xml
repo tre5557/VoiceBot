@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6bf7a922-c101-49a7-9f1e-45a3224635e3" name="Changes" comment="Added properties to gitIgnore" />
+    <list default="true" id="6bf7a922-c101-49a7-9f1e-45a3224635e3" name="Changes" comment="added Scrinshot" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -131,7 +131,14 @@
       <option name="project" value="LOCAL" />
       <updated>1726671736561</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="added Scrinshot">
+      <created>1726672665258</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1726672665258</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -163,7 +170,8 @@
     <MESSAGE value="gitignore 2" />
     <MESSAGE value="added data base" />
     <MESSAGE value="Added properties to gitIgnore" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added properties to gitIgnore" />
+    <MESSAGE value="added Scrinshot" />
+    <option name="LAST_COMMIT_MESSAGE" value="added Scrinshot" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
