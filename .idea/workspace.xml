@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6bf7a922-c101-49a7-9f1e-45a3224635e3" name="Changes" comment="Added limit on languages for AI">
-      <change afterPath="$PROJECT_DIR$/dispatcher/src/test/java/org/voicebot/controller/TelegramBotTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node/src/main/java/org/voicebot/dao/ChatHistoryDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node/src/main/java/org/voicebot/entity/ChatHistoryEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dispatcher/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/dispatcher/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node/src/main/java/org/voicebot/service/impl/MainServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/node/src/main/java/org/voicebot/service/impl/MainServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node/src/main/java/org/voicebot/service/openai/api/ChatGptHistoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/node/src/main/java/org/voicebot/service/openai/api/ChatGptHistoryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node/src/main/java/org/voicebot/service/openai/api/ChatGptService.java" beforeDir="false" afterPath="$PROJECT_DIR$/node/src/main/java/org/voicebot/service/openai/api/ChatGptService.java" afterDir="false" />
-    </list>
+    <list default="true" id="6bf7a922-c101-49a7-9f1e-45a3224635e3" name="Changes" comment="Created database table for storing messages" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
