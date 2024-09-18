@@ -38,3 +38,4 @@ build/
 ### Mac OS ###
 .DS_Store
 /dispatcher/src/main/resources/application.properties
+/node/src/main/resources/application.properties

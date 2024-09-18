@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6bf7a922-c101-49a7-9f1e-45a3224635e3" name="Changes" comment="Created database table for storing messages" />
+    <list default="true" id="6bf7a922-c101-49a7-9f1e-45a3224635e3" name="Changes" comment="Added properties to gitIgnore">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -260,7 +262,14 @@
       <option name="project" value="LOCAL" />
       <updated>1717695336360</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Added properties to gitIgnore">
+      <created>1726671242466</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1726671242466</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -285,7 +294,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/seconn_branch" />
+                        <option value="master" />
                       </list>
                     </value>
                   </entry>
@@ -312,7 +321,8 @@
     <MESSAGE value="started adding commandHandler, but didnt finish" />
     <MESSAGE value="added commandHandler package" />
     <MESSAGE value="fixed something" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed something" />
+    <MESSAGE value="Added properties to gitIgnore" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added properties to gitIgnore" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
